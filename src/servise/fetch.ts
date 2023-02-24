@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig } from "axios";
 
 export interface IApiResponse<T = {}> {
   headers: any;
@@ -21,11 +21,15 @@ export const get = <T = any>(url: string) => {
   return fetch<T>({ url });
 };
 
-export const post = <T = any>(url: string, data: object, options?: AxiosRequestConfig) => {
+export const post = <T = any>(
+  url: string,
+  data: object,
+  options?: AxiosRequestConfig
+) => {
   return fetch<T>({
     ...options,
     url,
-    method: 'POST',
+    method: "POST",
     data,
   });
 };
@@ -33,7 +37,7 @@ export const post = <T = any>(url: string, data: object, options?: AxiosRequestC
 export const put = <T = any>(url: string, data: object) => {
   return fetch<T>({
     url,
-    method: 'PUT',
+    method: "PUT",
     data,
   });
 };
@@ -41,6 +45,6 @@ export const put = <T = any>(url: string, data: object) => {
 export const del = <T = any>(url: string) => {
   return fetch<T>({
     url,
-    method: 'DELETE',
+    method: "DELETE",
   });
 };
