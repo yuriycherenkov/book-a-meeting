@@ -1,11 +1,3 @@
-import Album from './Album';
-
-export default function Home() {
-  return (
-    <>
-      <main>
-        <Album />
-      </main>
-    </>
-  );
+export default function HomePage() {
+  return <>Main page</>;
 }
