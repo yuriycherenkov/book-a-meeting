@@ -1,11 +1,13 @@
-import type { AppProps } from 'next/app';
-import Head from 'next/head';
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { CacheProvider, EmotionCache } from '@emotion/react';
-import createEmotionCache from '../utils/emotionConfig/createEmotionCache';
-import theme from '../theme';
+import type { AppProps } from "next/app";
+import Head from "next/head";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { CacheProvider, EmotionCache } from "@emotion/react";
+import createEmotionCache from "../utils/emotionConfig/createEmotionCache";
+import theme from "../theme";
+import { Layout } from "@/components/layout";
+import { AuthProvider } from "@/context/AuthContext";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -30,8 +32,8 @@ export default function App(props: AppPropsWithEMotion) {
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <title>Create Next App</title>
-        <meta name="description" content="Italian restaurant" />
+        <title>Book a meeting</title>
+        <meta name="description" content="Book a meeting" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -39,7 +41,11 @@ export default function App(props: AppPropsWithEMotion) {
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          <Component {...pageProps} />
+          <AuthProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </AuthProvider>
         </ThemeProvider>
       </QueryClientProvider>
     </CacheProvider>
