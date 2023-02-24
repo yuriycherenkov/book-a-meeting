@@ -1,5 +1,5 @@
-import { Avatar, Box, TextField, Typography } from "@mui/material";
-import PersonIcon from "@mui/icons-material/Person";
+import { Box, Typography } from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
 
 type IdentityProps = {
   firstName: string;
@@ -12,8 +12,8 @@ export const Identity: React.FC<IdentityProps> = ({ firstName, lastName }) => {
   return (
     <Box
       sx={{
-        display: "flex",
-        alignItems: "center",
+        display: 'flex',
+        alignItems: 'center',
       }}
     >
       <PersonIcon />

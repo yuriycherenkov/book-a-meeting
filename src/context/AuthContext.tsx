@@ -1,26 +1,37 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from 'react';
 
+type IValues = { [key: string]: string };
 interface IAuthContext {
-  userInfo: {};
+  // userInfo: {};
+  firstName: string;
+  lastName: string;
+  updateContext: () => void;
 }
 
 export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
-  const [context, setContext] = useState<IAuthContext>({} as IAuthContext);
+  const [context, setContext] = useState<IAuthContext>({
+    firstName: 'Yurii',
+    lastName: 'Cherenkov',
+  } as IAuthContext);
 
-  return (
-    <AuthContext.Provider value={context}>{children}</AuthContext.Provider>
-  );
+  const updateContext = (values: IValues = {}) => {
+    setContext((prev) => ({
+      ...prev,
+      values,
+    }));
+  };
+
+  return <AuthContext.Provider value={{ ...context, updateContext }}>{children}</AuthContext.Provider>;
 };
 
 const AuthContext = React.createContext<IAuthContext | null>(null);
 
 export const useAuth = () => {
-  // const context = useContext(AuthContext);
+  const context = useContext(AuthContext);
 
-  // if (!context) {
-  //   throw new Error("useAuth must be used within a AuthProvider");
-  // }
+  if (!context) {
+    throw new Error('useAuth must be used within a AuthProvider');
+  }
 
-  // return context.userInfo;
-  return { firstName: "Yurii", lastName: "Cherenkov" };
+  return context;
 };

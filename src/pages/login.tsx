@@ -1,18 +1,18 @@
-import { LoginForm } from "@/components/LoginForm";
-import { Avatar, Box, Typography } from "@mui/material";
-import GroupsIcon from "@mui/icons-material/Groups";
+import { LoginForm } from '@/components/LoginForm';
+import { Avatar, Box, Typography } from '@mui/material';
+import GroupsIcon from '@mui/icons-material/Groups';
 
 export default function LoginPage() {
   return (
     <Box
       sx={{
         marginTop: 10,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
       }}
     >
-      <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+      <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
         <GroupsIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
