@@ -8,6 +8,8 @@ import createEmotionCache from '../utils/emotionConfig/createEmotionCache';
 import theme from '../theme';
 import { Layout } from '@/components/layout';
 import { AuthProvider } from '@/context/AuthContext';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -42,9 +44,11 @@ export default function App(props: AppPropsWithEMotion) {
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <AuthProvider>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </LocalizationProvider>
           </AuthProvider>
         </ThemeProvider>
       </QueryClientProvider>
