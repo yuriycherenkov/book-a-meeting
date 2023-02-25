@@ -1,30 +1,31 @@
 import { LoginForm } from '@/components/LoginForm';
-import { Avatar, Box, Typography } from '@mui/material';
-import GroupsIcon from '@mui/icons-material/Groups';
+import Paper from '@mui/material/Paper';
+import { Box, Typography } from '@mui/material';
 import { getProviders, getCsrfToken } from 'next-auth/react';
 import { getSession } from 'next-auth/react';
 import { InferGetServerSidePropsType } from 'next';
+import Image from 'next/image';
+import logo from 'public/logo.png';
 
 export default function LoginPage({ providers, csrfToken }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   console.log(' props => ', providers, csrfToken);
 
   return (
-    <Box
-      sx={{
-        marginTop: 10,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
-      <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-        <GroupsIcon />
-      </Avatar>
-      <Typography component="h1" variant="h5">
-        Sign in
-      </Typography>
-      <LoginForm csrfToken={csrfToken} />
-    </Box>
+    <Paper sx={{ mt: 2, p: 2 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Image src={logo} alt="logo" width={50} />
+        <Typography component="h1" variant="h5" sx={{ mt: 2 }}>
+          Sign in
+        </Typography>
+        <LoginForm csrfToken={csrfToken} />
+      </Box>
+    </Paper>
   );
 }
 

@@ -3,10 +3,9 @@ import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import GroupsIcon from '@mui/icons-material/Groups';
-// import { useAuth } from '@/context/AuthContext';
 import { AuthUserNav } from './AuthUserNav';
 import { Identity } from './Identity';
-import { signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 
 const AppBar: React.FC = () => {
   const { data: session } = useSession();

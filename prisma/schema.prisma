@@ -10,46 +10,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Account {
-  id                 String  @id @default(cuid())
-  userId             String  @map("user_id")
-  type               String
-  provider           String
-  providerAccountId  String  @map("provider_account_id")
-  refresh_token      String?
-  access_token       String?
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?
-  session_state      String?
-  oauth_token_secret String?
-  oauth_token        String?
-
-  user User @relation(fields:[userId], references:[id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-}
-
-
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique@map("session_token")
-  userId       String   @map("user_id")
-  expires      DateTime
-  user         User     @relation(fields:[userId], references:[id], onDelete: Cascade)
-}
-
 model User {
-  id        String    @id @default(cuid())
+  id        Int       @id @default(autoincrement())
   email     String    @unique
-  firstName String
-  lastName  String
+  firstName String?
+  lastName  String?
   password  String
-  hash      String
   Meeting   Meeting[]
-  accounts  Account[]
-  sessions  Session[]
 }
 
 model Room {
@@ -65,14 +32,14 @@ model Meeting {
   title       String
   description String
   organizer   User     @relation(fields: [organizerId], references: [id])
-  organizerId String
+  organizerId Int
   room        Room     @relation(fields: [roomId], references: [id])
   roomId      Int
   createdAt   DateTime @default(now())
 }
 
 model Invitation {
-  id        Int     @id @default(autoincrement())
+  id        Int              @id @default(autoincrement())
   meetingId Int
   userId    Int
   status    InvitationStatus

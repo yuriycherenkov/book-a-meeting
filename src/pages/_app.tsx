@@ -7,6 +7,8 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import createEmotionCache from '../utils/emotionConfig/createEmotionCache';
 import theme from '../theme';
 import { Layout } from '@/components/layout';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { SessionProvider } from 'next-auth/react';
 
 // Client-side cache, shared for the whole session of the user in the browser.
@@ -45,11 +47,12 @@ export default function App(props: AppPropsWithEMotion) {
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          {/* <AuthProvider> */}
           <SessionProvider session={session}>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </LocalizationProvider>
           </SessionProvider>
           {/* </AuthProvider> */}
         </ThemeProvider>
