@@ -4,8 +4,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { useField } from 'formik';
 
-const DatePickerField: React.FC = ({ label, name }) => {
-  const [field, meta, helpers] = useField(name);
+const DatePickerField: React.FC<any> = ({ label, name }) => {
+  const [field, , helpers] = useField(name);
 
   return (
     <DatePicker
@@ -20,11 +20,11 @@ const DatePickerField: React.FC = ({ label, name }) => {
   );
 };
 
-const TimePickerField: React.FC = ({ label, name }) => {
-  const [field, meta, helpers] = useField(name);
+const TimePickerField: React.FC<any> = ({ label, name }) => {
+  const [field, , helpers] = useField(name);
   return (
     <TimePicker
-      label="Start time"
+      label={label}
       value={field.value}
       onChange={(newValue) => {
         helpers.setValue(newValue);

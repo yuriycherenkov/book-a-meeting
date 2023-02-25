@@ -1,14 +1,12 @@
 import { Box, Typography } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
+import { signOut } from 'next-auth/react';
 
 type IdentityProps = {
-  firstName: string;
-  lastName: string;
+  user: string;
 };
 
-export const Identity: React.FC<IdentityProps> = ({ firstName, lastName }) => {
-  const fullName = `${firstName} ${lastName}`;
-
+export const Identity: React.FC<IdentityProps> = ({ user }) => {
   return (
     <Box
       sx={{
@@ -17,7 +15,8 @@ export const Identity: React.FC<IdentityProps> = ({ firstName, lastName }) => {
       }}
     >
       <PersonIcon />
-      <Typography>{fullName}</Typography>
+      <Typography>{user}</Typography>
+      <button onClick={() => signOut()}>logout </button>
     </Box>
   );
 };
