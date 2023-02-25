@@ -1,20 +1,17 @@
 import Button from '@mui/material/Button';
 import { useFormik } from 'formik';
 import { Box, TextField } from '@mui/material';
-import { signIn, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
+import { validationSchema } from './validation';
 
 const LoginForm: React.FC<{ csrfToken?: string }> = ({ csrfToken }) => {
-  const { data: session, status, ...rest } = useSession();
-  console.log('status ', status, session, rest);
-
-  const { handleSubmit, handleChange, values, isSubmitting } = useFormik({
+  const { handleSubmit, handleChange, values, isSubmitting, errors } = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
+    validationSchema,
     onSubmit: (values) => {
-      // console.log(JSON.stringify(values, null, 2));
-
       signIn('credentials', {
         // redirect: false,
         email: values.email,
@@ -37,6 +34,8 @@ const LoginForm: React.FC<{ csrfToken?: string }> = ({ csrfToken }) => {
         fullWidth
         autoComplete="email"
         autoFocus
+        error={Boolean(errors.email)}
+        helperText={errors.email}
       />
       <TextField
         id="password"
@@ -49,12 +48,13 @@ const LoginForm: React.FC<{ csrfToken?: string }> = ({ csrfToken }) => {
         required
         fullWidth
         autoComplete="current-password"
+        error={Boolean(errors.password)}
+        helperText={errors.password}
       />
-      {!session && (
-        <Button disabled={isSubmitting} type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-          {isSubmitting ? 'Submitting...' : 'Sign in'}
-        </Button>
-      )}
+
+      <Button disabled={isSubmitting} type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+        {isSubmitting ? 'Submitting...' : 'Sign in'}
+      </Button>
     </Box>
   );
 };
