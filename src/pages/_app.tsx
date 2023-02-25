@@ -7,7 +7,6 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import createEmotionCache from '../utils/emotionConfig/createEmotionCache';
 import theme from '../theme';
 import { Layout } from '@/components/layout';
-// import { AuthProvider } from '@/context/AuthContext';
 import { SessionProvider } from 'next-auth/react';
 
 // Client-side cache, shared for the whole session of the user in the browser.
@@ -28,9 +27,11 @@ const queryClient = new QueryClient({
 });
 
 export default function App(props: AppPropsWithEMotion) {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
-
-  console.log('pageProps ', pageProps);
+  const {
+    Component,
+    emotionCache = clientSideEmotionCache,
+    pageProps: { session, ...pageProps },
+  } = props;
 
   return (
     <CacheProvider value={emotionCache}>
@@ -45,7 +46,7 @@ export default function App(props: AppPropsWithEMotion) {
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           {/* <AuthProvider> */}
-          <SessionProvider session={pageProps.session}>
+          <SessionProvider session={session}>
             <Layout>
               <Component {...pageProps} />
             </Layout>

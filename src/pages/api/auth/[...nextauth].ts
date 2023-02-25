@@ -1,12 +1,12 @@
 import { NextApiHandler } from 'next';
-import NextAuth from 'next-auth';
+import NextAuth, { NextAuthOptions } from 'next-auth';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import prisma from '../../../lib/prisma';
 
-const authHandler: NextApiHandler = (req, res) => NextAuth(req, res, options);
+const authHandler: NextApiHandler = (req, res) => NextAuth(req, res, authOptions);
 
-const options = {
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'Credentials',
@@ -17,16 +17,17 @@ const options = {
           placeholder: 'postgres',
         },
         password: { label: 'Password', type: 'password' },
+        csrfToken: { type: 'text' },
       },
       async authorize(credentials) {
-        console.log('credentials ', credentials);
+        console.log('credentials => ', credentials);
 
         const { email, password } = credentials as {
           email: string;
           password: string;
         };
 
-        console.log(email, password);
+        console.log('user cred -> ', email, password);
 
         const existingUser = await prisma.user.findFirst({
           where: { email },
@@ -34,18 +35,37 @@ const options = {
 
         console.log('existingUser ', existingUser);
 
-        // handle if doesn't exist
-        return existingUser;
-        // if (!isValid) {
-        //   throw new Error('Wrong credentials. Try again.')
+        // if (!existingUser) {
+        //   return null;
         // }
 
-        // return user
+        return {
+          id: email,
+          email,
+          password,
+          csrfToken: credentials?.csrfToken,
+        };
       },
     }),
   ],
   adapter: PrismaAdapter(prisma),
   secret: process.env.SECRET,
+  session: {
+    strategy: 'jwt',
+  },
+  callbacks: {
+    async session({ session, token }) {
+      // session.address = token.sub
+      // session.user.name = token.sub
+      // session.user.image = "https://www.fillmurray.com/128/128"
+
+      console.log('session => ', session, 'token => ', token);
+      return session;
+    },
+  },
+  pages: {
+    signIn: '/login',
+  },
 };
 
 export default authHandler;

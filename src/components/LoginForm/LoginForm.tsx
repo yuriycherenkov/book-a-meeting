@@ -1,38 +1,41 @@
 import Button from '@mui/material/Button';
 import { useFormik } from 'formik';
 import { Box, TextField } from '@mui/material';
-import { signOut, useSession } from 'next-auth/react';
-import axios from 'axios';
+import { signIn, useSession } from 'next-auth/react';
 
-const userDataSend = (data: { username: string; password: string }) => axios.post('/api/auth/signin', data);
-
-const LoginForm: React.FC = () => {
-  const { data: session, status } = useSession();
-  console.log('status ', status, session);
+const LoginForm: React.FC<{ csrfToken?: string }> = ({ csrfToken }) => {
+  const { data: session, status, ...rest } = useSession();
+  console.log('status ', status, session, rest);
 
   const { handleSubmit, handleChange, values, isSubmitting } = useFormik({
     initialValues: {
-      username: '',
+      email: '',
       password: '',
     },
     onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2));
-      userDataSend(values);
+      // console.log(JSON.stringify(values, null, 2));
+
+      signIn('credentials', {
+        // redirect: false,
+        email: values.email,
+        password: values.password,
+      });
     },
   });
 
   return (
     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+      <input type="hidden" name="csrfToken" defaultValue={csrfToken} />
       <TextField
-        id="username"
-        label="Username"
-        name="username"
+        id="email"
+        label="Email"
+        name="email"
         onChange={handleChange}
-        value={values.username}
+        value={values.email}
         margin="normal"
         required
         fullWidth
-        autoComplete="username"
+        autoComplete="email"
         autoFocus
       />
       <TextField
@@ -50,18 +53,6 @@ const LoginForm: React.FC = () => {
       {!session && (
         <Button disabled={isSubmitting} type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
           {isSubmitting ? 'Submitting...' : 'Sign in'}
-        </Button>
-      )}
-      {session && (
-        <Button
-          onClick={() => signOut()}
-          disabled={isSubmitting}
-          type="button"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-        >
-          Sign out
         </Button>
       )}
     </Box>

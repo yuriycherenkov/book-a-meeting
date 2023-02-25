@@ -6,10 +6,10 @@ import GroupsIcon from '@mui/icons-material/Groups';
 // import { useAuth } from '@/context/AuthContext';
 import { AuthUserNav } from './AuthUserNav';
 import { Identity } from './Identity';
+import { signOut, useSession } from 'next-auth/react';
 
 const AppBar: React.FC = () => {
-  // const userInfo = useAuth();
-  const userInfo = {};
+  const { data: session } = useSession();
 
   return (
     <MuiAppBar position="static">
@@ -18,10 +18,10 @@ const AppBar: React.FC = () => {
         <Typography variant="h6" color="inherit" noWrap>
           Book a meeting
         </Typography>
-        {!!Object.keys(userInfo).length && (
+        {!!session?.user?.email && (
           <>
             <AuthUserNav />
-            {/* <Identity {...userInfo} /> */}
+            <Identity user={session.user.email} />
           </>
         )}
       </Toolbar>
