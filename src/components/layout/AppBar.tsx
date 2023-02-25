@@ -3,12 +3,13 @@ import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import GroupsIcon from '@mui/icons-material/Groups';
-import { useAuth } from '@/context/AuthContext';
+// import { useAuth } from '@/context/AuthContext';
 import { AuthUserNav } from './AuthUserNav';
 import { Identity } from './Identity';
 
 const AppBar: React.FC = () => {
-  const userInfo = useAuth();
+  // const userInfo = useAuth();
+  const userInfo = {};
 
   return (
     <MuiAppBar position="static">
@@ -20,7 +21,7 @@ const AppBar: React.FC = () => {
         {!!Object.keys(userInfo).length && (
           <>
             <AuthUserNav />
-            <Identity {...userInfo} />
+            {/* <Identity {...userInfo} /> */}
           </>
         )}
       </Toolbar>
