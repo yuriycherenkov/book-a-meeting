@@ -10,10 +10,44 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Person {
-  personid    Int     @id @default(autoincrement())
-  lastName String
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
   firstName String
-  address String
-  city String
+  lastName  String
+  password  String
+  hash      String
+  Meeting   Meeting[]
+}
+
+model Room {
+  id          Int       @id @default(autoincrement())
+  number      Int
+  capacity    Int
+  description String
+  Meeting     Meeting[]
+}
+
+model Meeting {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  organizer   User     @relation(fields: [organizerId], references: [id])
+  organizerId Int
+  room        Room     @relation(fields: [roomId], references: [id])
+  roomId      Int
+  createdAt   DateTime @default(now())
+}
+
+model Invitation {
+  id        Int     @id @default(autoincrement())
+  meetingId Int
+  userId    Int
+  status    InvitationStatus
+}
+
+enum InvitationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
 }
