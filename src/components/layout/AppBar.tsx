@@ -11,6 +11,8 @@ import logo from 'public/logo.png';
 const AppBar: React.FC = () => {
   const { data: session } = useSession();
 
+  if (!session?.user?.email) return null;
+
   return (
     <MuiAppBar position="static" color="transparent" elevation={0}>
       <Toolbar>
@@ -18,12 +20,8 @@ const AppBar: React.FC = () => {
         <Typography variant="h6" color="primary" noWrap sx={{ ml: 2 }}>
           Book a meeting
         </Typography>
-        {!!session?.user?.email && (
-          <>
-            <AuthUserNav />
-            <Identity user={session.user.email} />
-          </>
-        )}
+        <AuthUserNav />
+        <Identity user={session.user.email} />
       </Toolbar>
     </MuiAppBar>
   );
