@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import { MeetingsTable } from '@/components/MeetingTable';
 import { useEffect } from 'react';
 import { get } from '@/servise/fetch';
+import { getSession } from 'next-auth/react';
 
 export default function MeetingsPage() {
   useEffect(() => {
@@ -19,4 +20,21 @@ export default function MeetingsPage() {
       <MeetingsTable />
     </Paper>
   );
+}
+
+export async function getServerSideProps(ctx: any) {
+  const session = await getSession(ctx);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/signin',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { session },
+  };
 }

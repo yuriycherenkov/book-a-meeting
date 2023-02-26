@@ -22,13 +22,10 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials) return null;
-        console.log('credentials => ', credentials);
 
         const existingUser = await prisma.user.findFirst({
           where: { email: credentials?.email },
         });
-
-        console.log('existingUser ', existingUser);
 
         if (!existingUser) {
           // const hash = await encodePassword(credentials.password);
@@ -66,7 +63,10 @@ export const authOptions: NextAuthOptions = {
       // session.user.name = token.sub
       // session.user.image = "https://www.fillmurray.com/128/128"
 
-      console.log('session => ', session, 'token => ', token);
+      // @ts-ignore
+      if (session?.user) session.user!.id = token.sub;
+
+      console.log('session => ', session.user, 'token => ', token);
       return session;
     },
   },
