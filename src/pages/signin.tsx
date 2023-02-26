@@ -10,8 +10,8 @@ import logo from 'public/logo.png';
 
 export default function SignInPage({ csrfToken }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    <Paper sx={{ mt: 20, p: 2, maxWidth: 700 }}>
-      <Stack>
+    <Paper sx={{ p: 2, maxWidth: 700, margin: '0 auto', mt: 20 }}>
+      <Stack alignItems="center">
         <Image src={logo} alt="logo" width={50} />
         <Typography component="h1" variant="h5" sx={{ mt: 2 }}>
           Welcome to booking a meeting platform! 👋🏻

@@ -17,8 +17,8 @@ const fetch = async <T>(options: AxiosRequestConfig) => {
   }
 };
 
-export const get = <T = any>(url: string) => {
-  return fetch<T>({ url });
+export const get = <T = any>(url: string, options?: AxiosRequestConfig) => {
+  return fetch<T>({ ...options, url });
 };
 
 export const post = <T = any>(url: string, data: object, options?: AxiosRequestConfig) => {
