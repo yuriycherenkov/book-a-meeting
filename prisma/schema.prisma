@@ -11,42 +11,57 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  email     String    @unique
-  firstName String?
-  lastName  String?
-  password  String
-  Meeting   Meeting[]
+  id         Int          @id @default(autoincrement())
+  email      String       @unique
+  firstName  String?
+  lastName   String?
+  password   String
+  role       Role         @default(EMPLOYEE)
+  Meeting    Meeting[]
+  Invitation Invitation[]
 }
 
 model Room {
-  id          Int       @id @default(autoincrement())
-  number      Int
-  capacity    Int
-  description String
-  Meeting     Meeting[]
+  id       Int       @id @default(autoincrement())
+  number   Int
+  capacity Int
+  location String
+  Meeting  Meeting[]
 }
 
 model Meeting {
-  id          Int      @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   title       String
-  description String
-  organizer   User     @relation(fields: [organizerId], references: [id])
+  agenda      String?
+  organizer   User         @relation(fields: [organizerId], references: [id])
   organizerId Int
-  room        Room     @relation(fields: [roomId], references: [id])
+  room        Room         @relation(fields: [roomId], references: [id])
   roomId      Int
-  createdAt   DateTime @default(now())
+  startDate   DateTime
+  endDate     DateTime
+  createdAt   DateTime     @default(now())
+  Invitation  Invitation[]
 }
 
 model Invitation {
-  id        Int              @id @default(autoincrement())
-  meetingId Int
-  userId    Int
-  status    InvitationStatus
+  id          Int              @id @default(autoincrement())
+  meetingId   Int
+  meeting     Meeting          @relation(fields: [meetingId], references: [id])
+  userId      Int
+  participant User             @relation(fields: [userId], references: [id])
+  status      InvitationStatus
 }
 
 enum InvitationStatus {
   PENDING
   ACCEPTED
   REJECTED
+}
+
+enum Role {
+  EMPLOYEE
+  DEV
+  QA
+  PM
+  BA
 }
