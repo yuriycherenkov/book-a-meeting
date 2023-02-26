@@ -1,4 +1,4 @@
-import { PrismaClient, Role } from '@prisma/client';
+import { PrismaClient, Role, InvitationStatus } from '@prisma/client';
 import { encodePassword } from '../src/lib/password';
 
 const prisma = new PrismaClient();
@@ -126,6 +126,33 @@ const USERS = [
   },
 ];
 
+const MEETINGS = [
+  {
+    title: 'Status meeting',
+    agenda: 'Morning status checkup with the team',
+    organizerId: 4,
+    roomId: 3,
+    startDate: '2023-02-26T07:00:00.371Z',
+    endDate: '2023-02-26T07:30:00.131Z',
+  },
+  {
+    title: 'Refinement',
+    agenda: 'Team refinement for task estimation',
+    organizerId: 4,
+    roomId: 4,
+    startDate: '2023-02-26T10:00:00.371Z',
+    endDate: '2023-02-26T11:00:00.131Z',
+  },
+  {
+    title: 'Demo',
+    agenda: 'Team sprint demo',
+    organizerId: 4,
+    roomId: 4,
+    startDate: '2023-02-27T11:00:00.371Z',
+    endDate: '2023-02-27T12:00:00.131Z',
+  },
+];
+
 async function main() {
   // create rooms
   for (const room of ROOMS) {
@@ -140,6 +167,23 @@ async function main() {
       data: { ...user, password },
     });
   }
+
+  // for (const meeting of MEETINGS) {
+  //   await prisma.meeting.create({
+  //     data: {
+  //       ...meeting,
+  //       invitations: {
+  //         create: [
+  //           { userId: 2, status: InvitationStatus.PENDING },
+  //           { userId: 2, status: InvitationStatus.ACCEPTED },
+  //           { userId: 2, status: InvitationStatus.REJECTED },
+  //           { userId: 2, status: InvitationStatus.ACCEPTED },
+  //           { userId: 2, status: InvitationStatus.PENDING },
+  //         ],
+  //       },
+  //     },
+  //   });
+  // }
 }
 main()
   .then(async () => {

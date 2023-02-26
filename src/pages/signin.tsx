@@ -1,6 +1,7 @@
 import { SignInForm } from '@/components/SignInForm';
 import Paper from '@mui/material/Paper';
-import { Box, Typography } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
 import { getProviders, getCsrfToken } from 'next-auth/react';
 import { getSession } from 'next-auth/react';
 import { InferGetServerSidePropsType } from 'next';
@@ -9,20 +10,15 @@ import logo from 'public/logo.png';
 
 export default function SignInPage({ csrfToken }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    <Paper sx={{ mt: 20, p: 2 }}>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
+    <Paper sx={{ mt: 20, p: 2, maxWidth: 700 }}>
+      <Stack>
         <Image src={logo} alt="logo" width={50} />
         <Typography component="h1" variant="h5" sx={{ mt: 2 }}>
-          Sign in
+          Welcome to booking a meeting platform! 👋🏻
         </Typography>
+        <Typography sx={{ mt: 1 }}>Please sign-in to your account and start the adventure</Typography>
         <SignInForm csrfToken={csrfToken} />
-      </Box>
+      </Stack>
     </Paper>
   );
 }

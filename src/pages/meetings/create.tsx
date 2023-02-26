@@ -1,7 +1,6 @@
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import CreateMeetingForm from '@/components/CreateMeetingForm/CreateMeetingForm';
-import { getSession } from 'next-auth/react';
 
 export default function MeetingsPage() {
   return (
@@ -12,21 +11,4 @@ export default function MeetingsPage() {
       <CreateMeetingForm />
     </Paper>
   );
-}
-
-export async function getServerSideProps(ctx: any) {
-  const session = await getSession(ctx);
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: '/signin',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: { session },
-  };
 }
