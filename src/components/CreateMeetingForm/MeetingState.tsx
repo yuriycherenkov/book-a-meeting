@@ -17,17 +17,14 @@ interface Rooms {
 }
 
 export const MeetingState = () => {
-  const [rooms, setRooms] = useState<Rooms[]>([]);
+  const [rooms, setRooms] = useState<Rooms[] | null>(null);
   const { values } = useFormikContext<CreateRoomsParams>();
-
-  console.log(values);
 
   useEffect(() => {
     if (values?.startTime && values?.endTime) {
-      get<Rooms[]>('/api/rooms', { params: { startDate: values.startTime, endDate: values.endTime } }).then((res) => {
-        console.log('res => ', res);
-        setRooms(res);
-      });
+      get<Rooms[]>('/api/rooms/available', { params: { startDate: values.startTime, endDate: values.endTime } }).then(
+        (res) => setRooms(res)
+      );
     }
   }, [values?.endTime, values?.startTime]);
 
