@@ -8,7 +8,7 @@ import { AlertComponent } from '../AlertComponent';
 const SignInForm: React.FC<{ csrfToken?: string }> = ({ csrfToken }) => {
   const { signIn, hasError, setError: resetError } = useSignIn();
 
-  const { handleSubmit, handleChange, values, errors } = useFormik({
+  const { handleSubmit, handleChange, values, errors, touched } = useFormik({
     initialValues: {
       email: '',
       password: '',
@@ -44,7 +44,7 @@ const SignInForm: React.FC<{ csrfToken?: string }> = ({ csrfToken }) => {
         fullWidth
         autoComplete="email"
         autoFocus
-        error={Boolean(errors.email)}
+        error={Boolean(errors.email && touched.email)}
         helperText={errors.email}
       />
       <TextField
@@ -58,7 +58,7 @@ const SignInForm: React.FC<{ csrfToken?: string }> = ({ csrfToken }) => {
         required
         fullWidth
         autoComplete="current-password"
-        error={Boolean(errors.password)}
+        error={Boolean(errors.password && touched.password)}
         helperText={errors.password}
       />
       <AlertComponent
