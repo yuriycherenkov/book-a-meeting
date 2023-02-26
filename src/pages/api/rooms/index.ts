@@ -1,10 +1,11 @@
 import prisma from '@/lib/prisma';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import nc from 'next-connect';
-import { onError } from '../../utils/onError';
+import { onError } from '../../../utils/onError';
 
 const getRoomsPrisma = () => prisma.room.findMany();
 
+// GET /api/rooms
 const getRooms = async (req: NextApiRequest, res: NextApiResponse) => {
   const response = await getRoomsPrisma();
 
