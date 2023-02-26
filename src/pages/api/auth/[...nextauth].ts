@@ -28,13 +28,6 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (!existingUser) {
-          // const hash = await encodePassword(credentials.password);
-          // await prisma.user.create({
-          //   data: {
-          //     email: credentials.email,
-          //     password: hash,
-          //   },
-          // });
           return null;
         }
         const { password, id, ...userData } = existingUser;
@@ -66,7 +59,6 @@ export const authOptions: NextAuthOptions = {
       // @ts-ignore
       if (session?.user) session.user!.id = token.sub;
 
-      console.log('session => ', session.user, 'token => ', token);
       return session;
     },
   },
