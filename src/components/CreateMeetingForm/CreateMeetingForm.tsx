@@ -9,7 +9,7 @@ import Attendee from './Attendee';
 const INITIAL_VALUES = {
   title: '',
   description: '',
-  room: null,
+  roomId: null,
   date: null,
   startTime: null,
   endTime: null,

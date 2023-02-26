@@ -29,7 +29,7 @@ const rooms = [
 ];
 
 const MeetingRoom: React.FC = () => {
-  const [field] = useField('room');
+  const [field] = useField('roomId');
 
   return (
     <Box>
