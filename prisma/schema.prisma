@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,14 +8,14 @@ datasource db {
 }
 
 model User {
-  id         Int          @id @default(autoincrement())
-  email      String       @unique
-  firstName  String?
-  lastName   String?
-  password   String
-  role       Role         @default(EMPLOYEE)
-  Meeting    Meeting[]
-  Invitation Invitation[]
+  id          Int          @id @default(autoincrement())
+  email       String       @unique
+  firstName   String?
+  lastName    String?
+  password    String
+  role        Role         @default(EMPLOYEE)
+  invitations Invitation[]
+  Meeting     Meeting[]
 }
 
 model Room {
@@ -26,30 +23,30 @@ model Room {
   number   Int
   capacity Int
   location String
-  Meeting  Meeting[]
+  meetings Meeting[]
 }
 
 model Meeting {
   id          Int          @id @default(autoincrement())
   title       String
-  agenda      String?
-  organizer   User         @relation(fields: [organizerId], references: [id])
   organizerId Int
-  room        Room         @relation(fields: [roomId], references: [id])
   roomId      Int
-  startDate   DateTime
-  endDate     DateTime
   createdAt   DateTime     @default(now())
-  Invitation  Invitation[]
+  agenda      String?
+  endDate     DateTime
+  startDate   DateTime
+  invitations Invitation[]
+  organizer   User         @relation(fields: [organizerId], references: [id])
+  room        Room         @relation(fields: [roomId], references: [id])
 }
 
 model Invitation {
   id          Int              @id @default(autoincrement())
   meetingId   Int
-  meeting     Meeting          @relation(fields: [meetingId], references: [id])
   userId      Int
-  participant User             @relation(fields: [userId], references: [id])
   status      InvitationStatus
+  meeting     Meeting          @relation(fields: [meetingId], references: [id])
+  participant User             @relation(fields: [userId], references: [id])
 }
 
 enum InvitationStatus {
