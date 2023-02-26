@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Stack, TextField, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
@@ -22,6 +22,7 @@ const DatePickerField: React.FC<any> = ({ label, name }) => {
 
 const TimePickerField: React.FC<any> = ({ label, name }) => {
   const [field, , helpers] = useField(name);
+
   return (
     <TimePicker
       label={label}

@@ -39,7 +39,6 @@ const SignInForm: React.FC<{ csrfToken?: string }> = ({ csrfToken }) => {
         name="email"
         onChange={handleChange}
         value={values.email}
-        margin="normal"
         required
         fullWidth
         autoComplete="email"
@@ -54,7 +53,6 @@ const SignInForm: React.FC<{ csrfToken?: string }> = ({ csrfToken }) => {
         name="password"
         onChange={handleChange}
         value={values.password}
-        margin="normal"
         required
         fullWidth
         autoComplete="current-password"
