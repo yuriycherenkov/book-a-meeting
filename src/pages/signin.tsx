@@ -9,7 +9,7 @@ import logo from 'public/logo.png';
 
 export default function SignInPage({ csrfToken }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    <Paper sx={{ mt: 2, p: 2 }}>
+    <Paper sx={{ mt: 20, p: 2 }}>
       <Box
         sx={{
           display: 'flex',
