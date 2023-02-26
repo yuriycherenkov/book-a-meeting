@@ -1,22 +1,14 @@
-import { Avatar, Box, Typography } from '@mui/material';
-import GroupsIcon from '@mui/icons-material/Groups';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import { MeetingsTable } from '@/components/MeetingTable';
 
 export default function MeetingsPage() {
   return (
-    <Box
-      sx={{
-        marginTop: 10,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
-      <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-        <GroupsIcon />
-      </Avatar>
+    <Paper sx={{ mt: 2, p: 2, height: 500 }}>
       <Typography component="h1" variant="h5">
-        Sign in
+        My meetings
       </Typography>
-    </Box>
+      <MeetingsTable />
+    </Paper>
   );
 }
