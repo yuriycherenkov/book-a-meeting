@@ -1,17 +1,18 @@
 import Button from '@mui/material/Button';
 import { Formik } from 'formik';
-import { Box, TextField } from '@mui/material';
-import { Stack } from '@mui/system';
-import Attendee from './Attendee';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import Participants from './Participants';
 import { MeetingState } from './MeetingState';
 
 const INITIAL_VALUES = {
   title: '',
   description: '',
   roomId: null,
-  date: null,
-  startTime: null,
-  endTime: null,
+  startDate: null,
+  endDate: null,
+  participants: [],
 };
 
 const CreateMeetingForm: React.FC = () => {
@@ -45,15 +46,10 @@ const CreateMeetingForm: React.FC = () => {
               fullWidth
             />
             <MeetingState />
-            <Attendee />
-            <Stack direction="row" justifyContent="space-between">
-              <Button variant="outlined" sx={{ mt: 3, mb: 2 }}>
-                Cancel
-              </Button>
-              <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
-                Create
-              </Button>
-            </Stack>
+            <Participants />
+            <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
+              Create
+            </Button>
           </Stack>
         </Box>
       )}
