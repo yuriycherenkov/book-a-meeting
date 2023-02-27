@@ -14,3 +14,12 @@ export type User = {
   lastName: string;
   role: Role;
 };
+
+export type MeetingFormData = {
+  title: string;
+  agenda?: string;
+  roomId: string;
+  startDate: string;
+  endDate: string;
+  participants: string[];
+};
