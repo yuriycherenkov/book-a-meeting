@@ -5,10 +5,11 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Participants from './Participants';
 import { MeetingState } from './MeetingState';
+import { post } from '@/servise/fetch';
 
 const INITIAL_VALUES = {
   title: '',
-  description: '',
+  agenda: '',
   roomId: null,
   startDate: null,
   endDate: null,
@@ -21,6 +22,7 @@ const CreateMeetingForm: React.FC = () => {
       initialValues={INITIAL_VALUES}
       onSubmit={(values) => {
         console.log(JSON.stringify(values, null, 2));
+        post('/api/meetings', values);
       }}
     >
       {({ handleSubmit, handleChange, values }) => (
@@ -37,11 +39,11 @@ const CreateMeetingForm: React.FC = () => {
               fullWidth
             />
             <TextField
-              id="meeting-description"
-              label="Meeting description"
-              name="description"
+              id="meeting-agenda"
+              label="Meeting agenda"
+              name="agenda"
               onChange={handleChange}
-              value={values.description}
+              value={values.agenda}
               margin="normal"
               fullWidth
             />
