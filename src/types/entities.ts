@@ -1,4 +1,6 @@
-export interface Rooms {
+import { InvitationStatus } from '@prisma/client';
+
+export interface Room {
   id: number;
   number: number;
   capacity: number;
@@ -15,6 +17,13 @@ export type User = {
   role: Role;
 };
 
+export type Invitation = {
+  id: number;
+  meetingId: number;
+  status: InvitationStatus;
+  userId: number;
+};
+
 export type MeetingFormData = {
   title: string;
   agenda?: string;
@@ -22,4 +31,17 @@ export type MeetingFormData = {
   startDate: string;
   endDate: string;
   participants: string[];
+};
+
+export type MeetingData = {
+  agenda: string;
+  createdAt: string;
+  endDate: string;
+  id: number;
+  roomId: number;
+  startDate: string;
+  title: string;
+  invitations: Invitation[];
+  organizer: User;
+  room: Room;
 };

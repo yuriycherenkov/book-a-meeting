@@ -7,10 +7,10 @@ import FormLabel from '@mui/material/FormLabel';
 import Box from '@mui/material/Box';
 import { useField } from 'formik';
 import Alert from '@mui/material/Alert';
-import { Rooms } from '@/types/entities';
+import { Room } from '@/types/entities';
 import { RoomChip } from '../RoomChip';
 
-const MeetingRoom: React.FC<{ rooms: Rooms[] | null }> = ({ rooms }) => {
+const MeetingRoom: React.FC<{ rooms: Room[] | null }> = ({ rooms }) => {
   const [field] = useField('roomId');
 
   if (rooms === null) return <Alert severity="info">Please choose date and time to see available rooms</Alert>;
