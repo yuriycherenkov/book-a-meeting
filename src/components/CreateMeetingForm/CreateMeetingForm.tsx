@@ -6,13 +6,14 @@ import TextField from '@mui/material/TextField';
 import Participants from './Participants';
 import { MeetingState } from './MeetingState';
 import { post } from '@/servise/fetch';
+import { validationSchema } from './validation';
 
 const INITIAL_VALUES = {
   title: '',
   agenda: '',
   roomId: null,
-  startDate: null,
-  endDate: null,
+  startDate: new Date(),
+  endDate: new Date(),
   participants: [],
 };
 
@@ -20,12 +21,13 @@ const CreateMeetingForm: React.FC = () => {
   return (
     <Formik
       initialValues={INITIAL_VALUES}
+      validationSchema={validationSchema}
       onSubmit={(values) => {
         console.log(JSON.stringify(values, null, 2));
         post('/api/meetings', values);
       }}
     >
-      {({ handleSubmit, handleChange, values }) => (
+      {({ handleSubmit, handleChange, values, errors, touched }) => (
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <Stack spacing={2}>
             <TextField
@@ -37,6 +39,8 @@ const CreateMeetingForm: React.FC = () => {
               margin="normal"
               required
               fullWidth
+              error={Boolean(errors.title && touched.title)}
+              helperText={errors.title}
             />
             <TextField
               id="meeting-agenda"
