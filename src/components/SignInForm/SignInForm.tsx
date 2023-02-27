@@ -45,6 +45,7 @@ const SignInForm: React.FC<{ csrfToken?: string }> = ({ csrfToken }) => {
         autoFocus
         error={Boolean(errors.email && touched.email)}
         helperText={errors.email}
+        margin="normal"
       />
       <TextField
         id="password"
@@ -58,6 +59,7 @@ const SignInForm: React.FC<{ csrfToken?: string }> = ({ csrfToken }) => {
         autoComplete="current-password"
         error={Boolean(errors.password && touched.password)}
         helperText={errors.password}
+        margin="normal"
       />
       <AlertComponent
         hasError={hasError}

@@ -9,13 +9,7 @@ import { useField } from 'formik';
 import Chip from '@mui/material/Chip';
 import Alert from '@mui/material/Alert';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
-
-interface Rooms {
-  id: number;
-  number: number;
-  capacity: number;
-  location: string;
-}
+import { Rooms } from '@/types/entities';
 
 const MeetingRoom: React.FC<{ rooms: Rooms[] | null }> = ({ rooms }) => {
   const [field] = useField('roomId');

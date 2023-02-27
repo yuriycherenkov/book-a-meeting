@@ -3,17 +3,11 @@ import { get } from '@/servise/fetch';
 import { useFormikContext } from 'formik';
 import MeetingTime from './MeetingTime';
 import MeetingRoom from './MeetingRoom';
+import { Rooms } from '@/types/entities';
 
 interface CreateRoomsParams {
-  startTime: string;
-  endTime: string;
-}
-
-interface Rooms {
-  id: number;
-  number: number;
-  capacity: number;
-  location: string;
+  startDate: string;
+  endDate: string;
 }
 
 export const MeetingState = () => {
@@ -21,12 +15,12 @@ export const MeetingState = () => {
   const { values } = useFormikContext<CreateRoomsParams>();
 
   useEffect(() => {
-    if (values?.startTime && values?.endTime) {
-      get<Rooms[]>('/api/rooms/available', { params: { startDate: values.startTime, endDate: values.endTime } }).then(
+    if (values?.startDate && values?.endDate) {
+      get<Rooms[]>('/api/rooms/available', { params: { startDate: values.startDate, endDate: values.endDate } }).then(
         (res) => setRooms(res)
       );
     }
-  }, [values?.endTime, values?.startTime]);
+  }, [values?.endDate, values?.startDate]);
 
   return (
     <>
