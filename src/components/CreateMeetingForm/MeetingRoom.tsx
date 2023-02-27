@@ -33,7 +33,13 @@ const MeetingRoom: React.FC<{ rooms: Room[] | null }> = ({ rooms }) => {
               key={room.id}
               value={room.id}
               control={<Radio icon={<></>} checkedIcon={<></>} />}
-              label={<RoomChip fieldValue={field.value} location={room.location} roomId={room.id} />}
+              label={
+                <RoomChip
+                  color={Number(field.value) === room.id ? 'primary' : 'default'}
+                  location={room.location}
+                  number={room.number}
+                />
+              }
             />
           ))}
         </RadioGroup>

@@ -7,10 +7,20 @@ import { authOptions } from './auth/[...nextauth]';
 import { InvitationStatus } from '@prisma/client';
 import { MeetingFormData } from '@/types/entities';
 
-const getMeetingsPrisma = (organizerId: number) =>
+const getMeetingsPrisma = (userId: number) =>
   prisma.meeting.findMany({
-    include: { organizer: true, room: true, invitations: true },
-    where: { organizerId },
+    include: {
+      organizer: true,
+      room: true,
+      invitations: {
+        include: {
+          participant: true,
+        },
+      },
+    },
+    where: {
+      OR: [{ organizerId: userId }, { invitations: { some: { userId } } }],
+    },
   });
 
 const createMeetingPrisma = (meetingInfo: MeetingFormData & { organizerId: number }) => {

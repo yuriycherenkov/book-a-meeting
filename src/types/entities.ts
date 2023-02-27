@@ -22,6 +22,7 @@ export type Invitation = {
   meetingId: number;
   status: InvitationStatus;
   userId: number;
+  participant: User;
 };
 
 export type MeetingFormData = {
