@@ -1,5 +1,7 @@
+import { get } from '@/servise/fetch';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
+import { useQuery } from 'react-query';
 import { COLUMNS } from './tableConfig';
 
 const mockerRows = [
@@ -35,7 +37,13 @@ const mockerRows = [
   },
 ];
 
+const useGetMeetings = () => useQuery('get-meetings', () => get('/api/meetings'));
+
 const MeetingsTable = () => {
+  const { data } = useGetMeetings();
+
+  console.log(' data ', data);
+
   return (
     <Box sx={{ height: 400 }}>
       <DataGrid columns={COLUMNS} rows={mockerRows} />

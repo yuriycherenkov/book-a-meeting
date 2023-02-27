@@ -7,10 +7,10 @@ import { authOptions } from './auth/[...nextauth]';
 import { InvitationStatus } from '@prisma/client';
 import { MeetingFormData } from '@/types/entities';
 
-const getMeetingsPrisma = (userId: number) =>
+const getMeetingsPrisma = (organizerId: number) =>
   prisma.meeting.findMany({
     include: { organizer: true, room: true, invitations: true },
-    where: { organizerId: userId },
+    where: { organizerId },
   });
 
 const createMeetingPrisma = (meetingInfo: MeetingFormData & { organizerId: number }) => {
@@ -32,7 +32,6 @@ const createMeetingPrisma = (meetingInfo: MeetingFormData & { organizerId: numbe
 // GET /api/meetings
 const getMeetings = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getServerSession(req, res, authOptions);
-  console.log('Session: ', session);
   const organizerId = Number(session?.user?.id);
 
   const response = await getMeetingsPrisma(organizerId);
