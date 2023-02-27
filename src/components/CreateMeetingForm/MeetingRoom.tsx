@@ -6,12 +6,11 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Box from '@mui/material/Box';
 import { useField } from 'formik';
-import Chip from '@mui/material/Chip';
 import Alert from '@mui/material/Alert';
-import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
-import { Rooms } from '@/types/entities';
+import { Room } from '@/types/entities';
+import { RoomChip } from '../RoomChip';
 
-const MeetingRoom: React.FC<{ rooms: Rooms[] | null }> = ({ rooms }) => {
+const MeetingRoom: React.FC<{ rooms: Room[] | null }> = ({ rooms }) => {
   const [field] = useField('roomId');
 
   if (rooms === null) return <Alert severity="info">Please choose date and time to see available rooms</Alert>;
@@ -34,13 +33,7 @@ const MeetingRoom: React.FC<{ rooms: Rooms[] | null }> = ({ rooms }) => {
               key={room.id}
               value={room.id}
               control={<Radio icon={<></>} checkedIcon={<></>} />}
-              label={
-                <Chip
-                  icon={<MeetingRoomIcon />}
-                  color={Number(field.value) === room.id ? 'primary' : 'default'}
-                  label={`${room.number} ${room.location}`}
-                />
-              }
+              label={<RoomChip fieldValue={field.value} location={room.location} roomId={room.id} />}
             />
           ))}
         </RadioGroup>

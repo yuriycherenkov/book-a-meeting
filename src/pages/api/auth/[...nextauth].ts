@@ -52,12 +52,15 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async session({ session, token }) {
-      // session.address = token.sub
-      // session.user.name = token.sub
-      // session.user.image = "https://www.fillmurray.com/128/128"
-
-      // @ts-ignore
-      if (session?.user) session.user!.id = token.sub;
+      if (session?.user && token.sub) {
+        return {
+          ...session,
+          user: {
+            ...session.user,
+            id: token.sub,
+          },
+        };
+      }
 
       return session;
     },
