@@ -5,7 +5,7 @@ import { StaticTimePicker } from '@mui/x-date-pickers/StaticTimePicker';
 import { useField, useFormikContext } from 'formik';
 
 const TimePickerField: React.FC<any> = ({ label, name, ...props }) => {
-  const [field, , helpers] = useField(name);
+  const [field, values, helpers] = useField(name);
 
   return (
     <StaticTimePicker
@@ -14,7 +14,9 @@ const TimePickerField: React.FC<any> = ({ label, name, ...props }) => {
       onChange={(newValue) => {
         helpers.setValue(newValue);
       }}
-      renderInput={(params) => <TextField {...params} />}
+      renderInput={(params) => (
+        <TextField {...params} error={Boolean(values.error && values.touched)} helperText={values.error} />
+      )}
       {...props}
     />
   );
@@ -22,7 +24,8 @@ const TimePickerField: React.FC<any> = ({ label, name, ...props }) => {
 
 const MeetingTime: React.FC = () => {
   const { setFieldValue } = useFormikContext<any>();
-  const [meetingDate, setMeetingDate] = React.useState(null);
+  const [meetingDate, setMeetingDate] = React.useState<null | Date>(null);
+  const [, values, helpers] = useField('meetingDate');
 
   return (
     <Stack spacing={2}>
@@ -30,9 +33,12 @@ const MeetingTime: React.FC = () => {
       <DatePicker
         label="Meeting date"
         disablePast={true}
-        renderInput={(params) => <TextField {...params} />}
+        renderInput={(params) => (
+          <TextField {...params} error={Boolean(values.error && !values.value)} helperText={values.error} />
+        )}
         value={meetingDate}
         onChange={(newValue) => {
+          helpers.setValue(newValue);
           setMeetingDate(newValue);
           setFieldValue('startDate', newValue);
           setFieldValue('endDate', newValue);
