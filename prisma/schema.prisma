@@ -52,6 +52,7 @@ model Invitation {
 enum InvitationStatus {
   PENDING
   ACCEPTED
+  MAYBE
   REJECTED
 }
 

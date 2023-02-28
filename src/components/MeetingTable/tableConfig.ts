@@ -1,7 +1,3 @@
-import { GridActionsCellItem } from '@mui/x-data-grid';
-import DeleteIcon from '@mui/icons-material/Delete';
-import DoneIcon from '@mui/icons-material/Done';
-
 import {
   renderOrganizer,
   getDate,
@@ -11,6 +7,7 @@ import {
   renderParticipant,
   getStatus,
   renderStatus,
+  getActions,
 } from './helpers';
 
 export const getColumns = (userId: number) => [
@@ -32,9 +29,6 @@ export const getColumns = (userId: number) => [
     field: 'actions',
     type: 'actions',
     width: 100,
-    getActions: () => [
-      <GridActionsCellItem key="accept" icon={<DoneIcon />} label="Accept" />,
-      <GridActionsCellItem key="reject" icon={<DeleteIcon />} label="Reject" />,
-    ],
+    getActions: getActions(userId),
   },
 ];

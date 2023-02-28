@@ -1,10 +1,14 @@
-import { GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
+import { GridActionsCellItem, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
+import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
+import Stack from '@mui/material/Stack';
 import { RoomChip } from '../RoomChip';
 import { AvatarChip } from '../AvatarChip';
 import { Invitation, User } from '@/types/entities';
 import { StatusChip } from '../StatusChip';
 import { InvitationStatus } from '@prisma/client';
-import { Stack } from '@mui/material';
 import { StatusIcon } from '../StatusChip/StatusChip';
 
 export const renderOrganizer = (params: GridRenderCellParams<User, any, any>) => {
@@ -71,4 +75,50 @@ export const renderStatus = (params: GridRenderCellParams<InvitationStatus, any,
 
   if (!status) return '-';
   return <StatusChip status={status} />;
+};
+
+export const handleAcceptMeeting = () => {
+  console.log('Accept');
+};
+export const handleMaybeMeeting = () => {
+  console.log('Maybe');
+};
+export const handleRejectMeeting = () => {
+  console.log('Reject');
+};
+export const handleCancelMeeting = () => {
+  console.log('Cancel');
+};
+
+export const getActions = (userId: number) => (params: GridValueGetterParams) => {
+  // console.log('userId: ', userId);
+  // console.log('params: ', params.row);
+  const myMeetingActions = [
+    <GridActionsCellItem key="cancel" icon={<DeleteIcon />} label="Cancel" onClick={() => handleCancelMeeting()} />,
+  ];
+
+  const participantMeetingActions = [
+    <GridActionsCellItem
+      key="accept"
+      icon={<CheckCircleOutlinedIcon color="success" />}
+      label="Accept"
+      showInMenu
+      onClick={() => handleAcceptMeeting()}
+    />,
+    <GridActionsCellItem
+      key="maybe"
+      icon={<HelpOutlineOutlinedIcon color="warning" />}
+      label="Maybe"
+      showInMenu
+      onClick={() => handleMaybeMeeting()}
+    />,
+    <GridActionsCellItem
+      key="reject"
+      icon={<CancelOutlinedIcon color="error" />}
+      label="Reject"
+      showInMenu
+      onClick={() => handleRejectMeeting()}
+    />,
+  ];
+  return userId === params.row.organizerId ? myMeetingActions : participantMeetingActions;
 };
