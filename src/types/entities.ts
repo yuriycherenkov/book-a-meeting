@@ -44,5 +44,6 @@ export type MeetingData = {
   title: string;
   invitations: Invitation[];
   organizer: User;
+  organizerId: number;
   room: Room;
 };

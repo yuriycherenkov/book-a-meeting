@@ -6,10 +6,11 @@ import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import Stack from '@mui/material/Stack';
 import { RoomChip } from '../RoomChip';
 import { AvatarChip } from '../AvatarChip';
-import { Invitation, User } from '@/types/entities';
+import { Invitation, MeetingData, User } from '@/types/entities';
 import { StatusChip } from '../StatusChip';
 import { InvitationStatus } from '@prisma/client';
 import { StatusIcon } from '../StatusChip/StatusChip';
+import { del, put } from '@/servise/fetch';
 
 export const renderOrganizer = (params: GridRenderCellParams<User, any, any>) => {
   if (!params.value) {
@@ -77,24 +78,37 @@ export const renderStatus = (params: GridRenderCellParams<InvitationStatus, any,
   return <StatusChip status={status} />;
 };
 
-export const handleAcceptMeeting = () => {
-  console.log('Accept');
-};
-export const handleMaybeMeeting = () => {
-  console.log('Maybe');
-};
-export const handleRejectMeeting = () => {
-  console.log('Reject');
-};
-export const handleCancelMeeting = () => {
-  console.log('Cancel');
+type handlerParams = {
+  invitationId: number;
+  meetingId: number;
 };
 
-export const getActions = (userId: number) => (params: GridValueGetterParams) => {
-  // console.log('userId: ', userId);
-  // console.log('params: ', params.row);
+export const handleAcceptMeeting = ({ invitationId, meetingId }: handlerParams) => {
+  put(`/api/meetings/${meetingId}`, { invitationId, status: InvitationStatus.ACCEPTED });
+};
+export const handleMaybeMeeting = ({ invitationId, meetingId }: handlerParams) => {
+  put(`/api/meetings/${meetingId}`, { invitationId, status: InvitationStatus.MAYBE });
+};
+export const handleRejectMeeting = ({ invitationId, meetingId }: handlerParams) => {
+  put(`/api/meetings/${meetingId}`, { invitationId, status: InvitationStatus.REJECTED });
+};
+export const handleCancelMeeting = (meetingId: number) => {
+  console.log('Cancel');
+  del(`/api/meetings/${meetingId}`);
+};
+
+export const getActions = (userId: number) => (params: GridValueGetterParams<any, MeetingData>) => {
+  const meetingId = params.row.id;
+  const myInvitation = params.row.invitations.find((invitation) => invitation.userId === userId);
+  const invitationId = myInvitation?.id;
+
   const myMeetingActions = [
-    <GridActionsCellItem key="cancel" icon={<DeleteIcon />} label="Cancel" onClick={() => handleCancelMeeting()} />,
+    <GridActionsCellItem
+      key="cancel"
+      icon={<DeleteIcon />}
+      label="Cancel"
+      onClick={() => handleCancelMeeting(meetingId)}
+    />,
   ];
 
   const participantMeetingActions = [
@@ -103,21 +117,21 @@ export const getActions = (userId: number) => (params: GridValueGetterParams) =>
       icon={<CheckCircleOutlinedIcon color="success" />}
       label="Accept"
       showInMenu
-      onClick={() => handleAcceptMeeting()}
+      onClick={() => invitationId && handleAcceptMeeting({ invitationId, meetingId })}
     />,
     <GridActionsCellItem
       key="maybe"
       icon={<HelpOutlineOutlinedIcon color="warning" />}
       label="Maybe"
       showInMenu
-      onClick={() => handleMaybeMeeting()}
+      onClick={() => invitationId && handleMaybeMeeting({ invitationId, meetingId })}
     />,
     <GridActionsCellItem
       key="reject"
       icon={<CancelOutlinedIcon color="error" />}
       label="Reject"
       showInMenu
-      onClick={() => handleRejectMeeting()}
+      onClick={() => invitationId && handleRejectMeeting({ invitationId, meetingId })}
     />,
   ];
   return userId === params.row.organizerId ? myMeetingActions : participantMeetingActions;
