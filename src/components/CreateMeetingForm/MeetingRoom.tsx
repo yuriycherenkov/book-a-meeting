@@ -9,9 +9,10 @@ import { useField } from 'formik';
 import Alert from '@mui/material/Alert';
 import { Room } from '@/types/entities';
 import { RoomChip } from '../RoomChip';
+import { FormHelperText } from '@mui/material';
 
 const MeetingRoom: React.FC<{ rooms: Room[] | null }> = ({ rooms }) => {
-  const [field] = useField('roomId');
+  const [field, values] = useField('roomId');
 
   if (rooms === null) return <Alert severity="info">Please choose date and time to see available rooms</Alert>;
   if (rooms.length === 0)
@@ -22,10 +23,13 @@ const MeetingRoom: React.FC<{ rooms: Room[] | null }> = ({ rooms }) => {
       </Alert>
     );
 
+  const roomError = !values.value ? values.error : '';
+
   return (
     <Box>
-      <FormControl>
+      <FormControl error={!!roomError}>
         <FormLabel id="available-rooms-label">Available rooms</FormLabel>
+        {roomError && <FormHelperText id="my-helper-text">{roomError}</FormHelperText>}
         <RadioGroup aria-labelledby="available-rooms-label" {...field} row>
           {rooms.map((room) => (
             <FormControlLabel
