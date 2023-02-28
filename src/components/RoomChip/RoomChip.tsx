@@ -1,20 +1,13 @@
-import Chip from '@mui/material/Chip';
+import Chip, { ChipProps } from '@mui/material/Chip';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 
-interface RoomsChipProps {
-  fieldValue: string;
+interface RoomsChipProps extends ChipProps {
   location: string;
-  roomId: number;
+  number: number;
 }
 
-const RoomChip: React.FC<RoomsChipProps> = ({ fieldValue, location, roomId }) => {
-  return (
-    <Chip
-      icon={<MeetingRoomIcon />}
-      color={Number(fieldValue) === roomId ? 'primary' : 'default'}
-      label={`${roomId} ${location}`}
-    />
-  );
+const RoomChip: React.FC<RoomsChipProps> = ({ location, number, color }) => {
+  return <Chip icon={<MeetingRoomIcon />} color={color} label={`${number} ${location}`} />;
 };
 
 export default RoomChip;
