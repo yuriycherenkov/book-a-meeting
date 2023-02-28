@@ -2,14 +2,12 @@ import Box from '@mui/material/Box';
 import { useSession } from 'next-auth/react';
 import { DataGrid } from '@mui/x-data-grid';
 import { useGetMeetings } from '@/hooks/useGetMeetings';
-import { COLUMNS } from './tableConfig';
+import { getColumns } from './tableConfig';
 
 const MeetingsTable = () => {
   const { data: session } = useSession();
 
-  const currentUserId = session?.user.id;
-
-  console.log('Session: ', currentUserId);
+  const currentUserId = Number(session?.user.id);
 
   const { data = [] } = useGetMeetings();
 
@@ -17,21 +15,17 @@ const MeetingsTable = () => {
     <Box
       sx={{
         mt: 2,
-        '& .meeting-table-row': {
-          // flexWrap: 'wrap',
-          padding: '5px 0',
-        },
         '& .meeting-table-cell': {
-          flexWrap: 'wrap',
+          padding: '5px 10px',
         },
       }}
     >
       <DataGrid
         autoHeight
         pageSize={10}
-        columns={COLUMNS}
+        columns={getColumns(currentUserId)}
         rows={data}
-        getRowClassName={() => 'meeting-table-row'}
+        getCellClassName={() => 'meeting-table-cell'}
         getRowHeight={() => 'auto'}
       />
     </Box>

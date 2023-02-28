@@ -13,7 +13,7 @@ import {
   renderStatus,
 } from './helpers';
 
-export const COLUMNS = [
+export const getColumns = (userId: number) => [
   { field: 'title', headerName: 'Title', width: 150 },
   { field: 'date', headerName: 'Date', valueGetter: getDate, renderCell: renderDate },
   { field: 'startDate', headerName: 'Start time', renderCell: renderTime },
@@ -21,7 +21,7 @@ export const COLUMNS = [
   { field: 'room', headerName: 'Room', width: 180, renderCell: renderRoom },
   { field: 'organizer', headerName: 'Organizer', width: 200, renderCell: renderOrganizer },
   { field: 'agenda', headerName: 'Agenda', width: 180 },
-  { field: 'status', headerName: 'Status', valueGetter: getStatus, width: 150, renderCell: renderStatus },
+  { field: 'status', headerName: 'Status', valueGetter: getStatus(userId), width: 150, renderCell: renderStatus },
   {
     field: 'invitations',
     headerName: 'Participants',
