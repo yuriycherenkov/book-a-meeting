@@ -44,15 +44,15 @@ export const renderParticipant = (params: GridRenderCellParams<Invitation[], any
     <Stack alignItems="flex-start" spacing="2px">
       {invitations.map((invitation) => (
         <AvatarChip key={invitation.id} {...invitation.participant} />
+        // status
       ))}
     </Stack>
   );
 };
 
-export const getStatus = (params: GridValueGetterParams) => {
-  const currentUserId = 2; // TODO get current sessionId
+export const getStatus = (userId: number) => (params: GridValueGetterParams) => {
   const invitations = params.row.invitations as Invitation[];
-  const myInvitation = invitations.find((invitation) => invitation.userId === currentUserId);
+  const myInvitation = invitations.find((invitation) => invitation.userId === userId);
 
   return myInvitation?.status;
 };
