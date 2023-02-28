@@ -25,7 +25,7 @@ export const getColumns = (userId: number) => [
   {
     field: 'invitations',
     headerName: 'Participants',
-    width: 200,
+    width: 250,
     renderCell: renderParticipant,
   },
   {

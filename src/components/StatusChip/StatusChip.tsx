@@ -1,27 +1,42 @@
 import Chip, { ChipProps } from '@mui/material/Chip';
-import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import InfoIcon from '@mui/icons-material/Info';
-import DoneIcon from '@mui/icons-material/Done';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
+import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
+
 import { InvitationStatus } from '@prisma/client';
 
 interface RoomsChipProps extends ChipProps {
   status: InvitationStatus;
 }
 
-const iconMapper = {
-  PENDING: <InfoIcon />,
-  ACCEPTED: <DoneIcon />,
-  REJECTED: <ReportProblemIcon />,
+interface StatusIconProps {
+  status: InvitationStatus;
+}
+
+const IconMapper = {
+  PENDING: InfoIcon,
+  ACCEPTED: CheckCircleOutlinedIcon,
+  MAYBE: HelpOutlineOutlinedIcon,
+  REJECTED: CancelOutlinedIcon,
 };
 
 const colorMapper = {
   PENDING: 'info',
   ACCEPTED: 'success',
+  MAYBE: 'warning',
   REJECTED: 'error',
 } as const;
 
 const StatusChip: React.FC<RoomsChipProps> = ({ status }) => {
-  return <Chip icon={iconMapper[status]} color={colorMapper[status]} variant="outlined" label={status} />;
+  const IconComponent = IconMapper[status];
+  return <Chip icon={<IconComponent />} color={colorMapper[status]} variant="outlined" label={status} />;
 };
 
+const StatusIcon: React.FC<StatusIconProps> = ({ status }) => {
+  const IconComponent = IconMapper[status];
+  return <IconComponent color={colorMapper[status]} titleAccess={status} />;
+};
+
+export { StatusIcon };
 export default StatusChip;
