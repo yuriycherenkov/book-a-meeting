@@ -8,6 +8,7 @@ const MeetingsTable = () => {
   const { data: session } = useSession();
 
   const currentUserId = Number(session?.user.id);
+  const columns = getColumns(currentUserId);
 
   const { data = [] } = useGetMeetings();
 
@@ -21,9 +22,10 @@ const MeetingsTable = () => {
       }}
     >
       <DataGrid
+        loading={!currentUserId}
         autoHeight
         pageSize={10}
-        columns={getColumns(currentUserId)}
+        columns={columns}
         rows={data}
         getCellClassName={() => 'meeting-table-cell'}
         getRowHeight={() => 'auto'}
