@@ -1,5 +1,4 @@
 import Chip, { ChipProps } from '@mui/material/Chip';
-import InfoIcon from '@mui/icons-material/Info';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
@@ -15,14 +14,14 @@ interface StatusIconProps {
 }
 
 const IconMapper = {
-  PENDING: InfoIcon,
+  PENDING: HelpOutlineOutlinedIcon,
   ACCEPTED: CheckCircleOutlinedIcon,
   MAYBE: HelpOutlineOutlinedIcon,
   REJECTED: CancelOutlinedIcon,
 };
 
 const colorMapper = {
-  PENDING: 'info',
+  PENDING: 'secondary',
   ACCEPTED: 'success',
   MAYBE: 'warning',
   REJECTED: 'error',
