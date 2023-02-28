@@ -5,6 +5,7 @@ import { Invitation, User } from '@/types/entities';
 import { StatusChip } from '../StatusChip';
 import { InvitationStatus } from '@prisma/client';
 import { Stack } from '@mui/material';
+import { StatusIcon } from '../StatusChip/StatusChip';
 
 export const renderOrganizer = (params: GridRenderCellParams<User, any, any>) => {
   if (!params.value) {
@@ -41,10 +42,18 @@ export const renderParticipant = (params: GridRenderCellParams<Invitation[], any
 
   if (!invitations.length) return '-';
   return (
-    <Stack alignItems="flex-start" spacing="2px">
+    <Stack alignItems="flex-start" spacing="5px" sx={{ width: '100%' }}>
       {invitations.map((invitation) => (
-        <AvatarChip key={invitation.id} {...invitation.participant} />
-        // status
+        <Stack
+          key={invitation.id}
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="space-between"
+          sx={{ width: '100%' }}
+        >
+          <AvatarChip {...invitation.participant} />
+          <StatusIcon status={invitation.status} />
+        </Stack>
       ))}
     </Stack>
   );

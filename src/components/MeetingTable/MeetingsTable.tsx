@@ -15,7 +15,7 @@ const MeetingsTable = () => {
     <Box
       sx={{
         mt: 2,
-        '& .meeting-table-cell': {
+        '&& .meeting-table-cell': {
           padding: '5px 10px',
         },
       }}
