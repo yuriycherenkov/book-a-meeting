@@ -7,7 +7,7 @@ const Layout: React.FC<{ children: any }> = ({ children }) => {
     <>
       <AppBar />
       <main>
-        <Container maxWidth="lg">{children}</Container>
+        <Container maxWidth="xl">{children}</Container>
       </main>
     </>
   );

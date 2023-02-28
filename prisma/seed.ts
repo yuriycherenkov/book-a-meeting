@@ -175,10 +175,10 @@ async function main() {
   //       invitations: {
   //         create: [
   //           { userId: 2, status: InvitationStatus.PENDING },
-  //           { userId: 2, status: InvitationStatus.ACCEPTED },
-  //           { userId: 2, status: InvitationStatus.REJECTED },
-  //           { userId: 2, status: InvitationStatus.ACCEPTED },
-  //           { userId: 2, status: InvitationStatus.PENDING },
+  //           { userId: 3, status: InvitationStatus.ACCEPTED },
+  //           { userId: 4, status: InvitationStatus.REJECTED },
+  //           { userId: 5, status: InvitationStatus.ACCEPTED },
+  //           { userId: 6, status: InvitationStatus.PENDING },
   //         ],
   //       },
   //     },

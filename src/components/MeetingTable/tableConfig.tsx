@@ -15,14 +15,19 @@ import {
 
 export const COLUMNS = [
   { field: 'title', headerName: 'Title', width: 150 },
-  { field: 'description', headerName: 'Description', width: 100 },
-  { field: 'organizer', headerName: 'Organizer', width: 200, renderCell: renderOrganizer },
-  { field: 'room', headerName: 'Room', width: 180, renderCell: renderRoom },
   { field: 'date', headerName: 'Date', valueGetter: getDate, renderCell: renderDate },
   { field: 'startDate', headerName: 'Start time', renderCell: renderTime },
   { field: 'endDate', headerName: 'End time', renderCell: renderTime },
-  { field: 'invitations', headerName: 'Participants', width: 200, renderCell: renderParticipant },
-  { field: 'status', headerName: 'Status', valueGetter: getStatus, width: 180, renderCell: renderStatus },
+  { field: 'room', headerName: 'Room', width: 180, renderCell: renderRoom },
+  { field: 'organizer', headerName: 'Organizer', width: 200, renderCell: renderOrganizer },
+  { field: 'agenda', headerName: 'Agenda', width: 180 },
+  { field: 'status', headerName: 'Status', valueGetter: getStatus, width: 150, renderCell: renderStatus },
+  {
+    field: 'invitations',
+    headerName: 'Participants',
+    width: 200,
+    renderCell: renderParticipant,
+  },
   {
     field: 'actions',
     type: 'actions',

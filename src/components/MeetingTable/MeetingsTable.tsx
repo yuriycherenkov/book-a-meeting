@@ -14,8 +14,26 @@ const MeetingsTable = () => {
   const { data = [] } = useGetMeetings();
 
   return (
-    <Box sx={{ mt: 2 }}>
-      <DataGrid autoHeight pageSize={10} columns={COLUMNS} rows={data} />
+    <Box
+      sx={{
+        mt: 2,
+        '& .meeting-table-row': {
+          // flexWrap: 'wrap',
+          padding: '5px 0',
+        },
+        '& .meeting-table-cell': {
+          flexWrap: 'wrap',
+        },
+      }}
+    >
+      <DataGrid
+        autoHeight
+        pageSize={10}
+        columns={COLUMNS}
+        rows={data}
+        getRowClassName={() => 'meeting-table-row'}
+        getRowHeight={() => 'auto'}
+      />
     </Box>
   );
 };
