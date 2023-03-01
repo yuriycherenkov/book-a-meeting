@@ -23,6 +23,7 @@ const MeetingsTable = () => {
     >
       <DataGrid
         loading={!currentUserId}
+        rowsPerPageOptions={[10]}
         autoHeight
         pageSize={10}
         columns={columns}

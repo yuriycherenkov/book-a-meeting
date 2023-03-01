@@ -12,6 +12,7 @@ const INITIAL_VALUES = {
   title: '',
   agenda: '',
   roomId: null,
+  meetingDate: null,
   startDate: new Date(),
   endDate: new Date(),
   participants: [],
@@ -22,8 +23,7 @@ const CreateMeetingForm: React.FC = () => {
     <Formik
       initialValues={INITIAL_VALUES}
       validationSchema={validationSchema}
-      onSubmit={(values) => {
-        console.log(JSON.stringify(values, null, 2));
+      onSubmit={({ meetingDate: _, ...values }) => {
         post('/api/meetings', values);
       }}
     >
