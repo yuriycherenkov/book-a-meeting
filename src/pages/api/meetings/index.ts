@@ -54,7 +54,6 @@ const createMeeting = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getServerSession(req, res, authOptions);
 
   const meetingInfo = { ...req.body, organizerId: Number(session?.user?.id) };
-  console.log('meetingInfo: ', meetingInfo);
 
   const result = await createMeetingPrisma(meetingInfo);
   res.status(200).json(result);

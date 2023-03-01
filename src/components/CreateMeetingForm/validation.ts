@@ -5,9 +5,7 @@ export const validateStartDate = (startDate: Date | any, schema: Yup.DateSchema)
 
 export const validationSchema = Yup.object({
   title: Yup.string().required('Please enter title'),
-  roomId: Yup.boolean()
-    .oneOf([true], 'Required one of rooms to be selected')
-    .required('Required one of rooms to be selected'),
+  roomId: Yup.number().required('Required one of rooms to be selected'),
   agenda: Yup.string().optional(),
   meetingDate: Yup.date().required('Please enter meeting date'),
   startDate: Yup.date().required('Please enter start date'),
