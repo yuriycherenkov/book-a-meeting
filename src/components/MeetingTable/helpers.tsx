@@ -93,7 +93,6 @@ export const handleRejectMeeting = ({ invitationId, meetingId }: handlerParams) 
   put(`/api/meetings/${meetingId}`, { invitationId, status: InvitationStatus.REJECTED });
 };
 export const handleCancelMeeting = (meetingId: number) => {
-  console.log('Cancel');
   del(`/api/meetings/${meetingId}`);
 };
 
