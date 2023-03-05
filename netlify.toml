@@ -2,5 +2,5 @@
 package = "@netlify/plugin-nextjs"
 
 [build]
-command = "npx prisma generate && next build"
+command = "npx prisma generate && npx prisma db push && next build"
 publish = ".next"
